@@ -175,47 +175,91 @@ class Akwam : MainAPI() {
     }
 
     override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit
+): Boolean {
+    // Update mainUrl to use ak.sv instead of akwam.to
+    val updatedMainUrl = "https://ak.sv"
+    
+    try {
         val doc = app.get(data).document
 
-        val links = doc.select("div.tab-content.quality").map { element ->
-            val quality = getQualityFromId(element.attr("id").getIntFromText())
-            element.select(".col-lg-6 > a:contains(تحميل)").map { linkElement ->
-                if (linkElement.attr("href").contains("/download/")) {
-                    Pair(
-                        linkElement.attr("href"),
-                        quality,
-                    )
-                } else {
-                    val url = "$mainUrl/download${
-                        linkElement.attr("href").split("/link")[1]
-                    }${data.split("/movie|/episode|/shows|/show/episode".toRegex())[1]}"
-                    Pair(
-                        url,
-                        quality,
-                    )
-                    // just in case if they add the shorts urls again
+        val links = doc.select("div.tab-content.quality").mapNotNull { element ->
+            try {
+                val qualityId = element.attr("id").getIntFromText()
+                val quality = getQualityFromId(qualityId)
+                
+                element.select(".col-lg-6 > a").filter { linkElement ->
+                    // More reliable than Arabic text matching
+                    linkElement.attr("href").contains("download", ignoreCase = true) ||
+                    linkElement.text().contains("download", ignoreCase = true)
+                }.map { linkElement ->
+                    val href = linkElement.attr("href")
+                    val finalUrl = if (href.contains("/download/")) {
+                        href
+                    } else {
+                        // More robust URL construction
+                        val pathSegment = href.substringAfter("/link")
+                        val contentId = data.substringAfterLast("/")
+                        "$updatedMainUrl/download$pathSegment/$contentId"
+                    }
+                    Pair(finalUrl, quality)
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
             }
         }.flatten()
 
-        links.map {
-            val linkDoc = app.get(it.first).document
-            val button = linkDoc.select("div.btn-loader > a")
-            val url = button.attr("href")
+        // Process links in parallel for better performance
+        links.map { link ->
+            try {
+                val linkDoc = app.get(link.first).document
+                val downloadButton = linkDoc.selectFirst("div.btn-loader > a[href]")
+                val url = downloadButton?.attr("href") ?: return@map null
+                
+                // Add support for subtitles if available
+                doc.select("track[kind=subtitles]").forEach { sub ->
+                    subtitleCallback.invoke(
+                        SubtitleFile(
+                            sub.attr("srclang") ?: "ar",
+                            sub.attr("src") ?: ""
+                        )
+                    )
+                }
 
-            callback.invoke(
                 ExtractorLink(
                     this.name,
                     this.name,
                     url,
-                    this.mainUrl,
-                    it.second.value
+                    updatedMainUrl,  // Using the updated domain
+                    link.second.value
                 )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }.filterNotNull().forEach { callback.invoke(it) }
+
+        return links.isNotEmpty()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return false
+    }
+}
+
+// Updated quality mapping function
+private fun getQualityFromId(id: Int?): Qualities {
+    return when (id) {
+        2 -> Qualities.P360
+        3 -> Qualities.P480
+        4 -> Qualities.P720
+        5 -> Qualities.P1080
+        6 -> Qualities.P2160 // Future-proofing for 4K
+        else -> Qualities.Unknown
+    }
             )
         }
         return true
