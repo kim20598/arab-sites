@@ -4,7 +4,9 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.Qualities
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.jsoup.nodes.Element
+import kotlin.coroutines.resume
 
 class Akwam : MainAPI() {
     override var lang = "ar"
@@ -76,20 +78,18 @@ class Akwam : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val doc = app.get(url).document
         val mesEl = doc.select("#downloads > h2 > span").isNotEmpty()
-        val mesSt = if (mesEl) true else false
+        val mesSt = mesEl
         val isMovie = mesSt
         val title = doc.select("h1.entry-title").text()
         val posterUrl = doc.select("picture > img").attr("src")
 
-        val year =
-            doc.select("div.font-size-16.text-white.mt-2").firstOrNull {
-                it.text().contains("السنة")
-            }?.text()?.getIntFromText()
+        val year = doc.select("div.font-size-16.text-white.mt-2").firstOrNull {
+            it.text().contains("السنة")
+        }?.text()?.getIntFromText()
 
-        val duration =
-            doc.select("div.font-size-16.text-white.mt-2").firstOrNull {
-                it.text().contains("مدة الفيلم")
-            }?.text()?.getIntFromText()
+        val duration = doc.select("div.font-size-16.text-white.mt-2").firstOrNull {
+            it.text().contains("مدة الفيلم")
+        }?.text()?.getIntFromText()
 
         val synopsis = doc.select("div.widget-body p:first-child").text()
 
@@ -100,21 +100,20 @@ class Akwam : MainAPI() {
         }
 
         val actors = doc.select("div.widget-body > div > div.entry-box > a").mapNotNull {
-            val name = it?.selectFirst("div > .entry-title")?.text() ?: return@mapNotNull null
+            val name = it.selectFirst("div > .entry-title")?.text() ?: return@mapNotNull null
             val image = it.selectFirst("div > img")?.attr("src") ?: return@mapNotNull null
             Actor(name, image)
         }
 
-        val recommendations =
-            doc.select("div > div.widget-body > div.row > div > div.entry-box").mapNotNull {
-                val recTitle = it?.selectFirst("div.entry-body > .entry-title > .text-white")
-                    ?: return@mapNotNull null
-                val href = recTitle.attr("href") ?: return@mapNotNull null
-                val name = recTitle.text() ?: return@mapNotNull null
-                val poster = it.selectFirst(".entry-image > a > picture > img")?.attr("data-src")
-                    ?: return@mapNotNull null
-                MovieSearchResponse(name, href, this.name, TvType.Movie, fixUrl(poster))
-            }
+        val recommendations = doc.select("div > div.widget-body > div.row > div > div.entry-box").mapNotNull {
+            val recTitle = it.selectFirst("div.entry-body > .entry-title > .text-white")
+                ?: return@mapNotNull null
+            val href = recTitle.attr("href") ?: return@mapNotNull null
+            val name = recTitle.text() ?: return@mapNotNull null
+            val poster = it.selectFirst(".entry-image > a > picture > img")?.attr("data-src")
+                ?: return@mapNotNull null
+            MovieSearchResponse(name, href, this.name, TvType.Movie, fixUrl(poster))
+        }
 
         return if (isMovie) {
             newMovieLoadResponse(
@@ -137,9 +136,7 @@ class Akwam : MainAPI() {
                 it.toEpisode()
             }.let {
                 val isReversed = (it.lastOrNull()?.episode ?: 1) < (it.firstOrNull()?.episode ?: 0)
-                if (isReversed)
-                    it.reversed()
-                else it
+                if (isReversed) it.reversed() else it
             }
 
             newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
@@ -160,80 +157,75 @@ class Akwam : MainAPI() {
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
-    ): Boolean {
+    ): Boolean = suspendCancellableCoroutine { continuation ->
         try {
             val doc = app.get(data).document
 
-            // Try multiple selectors to find download links
-            val downloadSelectors = listOf(
-                "div.tab-content a[href*='download']", // Primary selector
-                "a.btn-download", // Alternative button style
-                "div.download-servers a[href]", // Server links
-                "div.quality-option a[href]" // Quality options
-            )
-
-            val links = mutableListOf<ExtractorLink>()
-
-            for (selector in downloadSelectors) {
-                doc.select(selector).forEach { element ->
-                    try {
-                        val href = element.attr("href").takeIf { it.isNotBlank() } ?: return@forEach
-                        val quality = when {
-                            element.text().contains("1080") || selector.contains("1080") -> Qualities.P1080
-                            element.text().contains("720") || selector.contains("720") -> Qualities.P720
-                            element.text().contains("480") || selector.contains("480") -> Qualities.P480
-                            element.text().contains("360") || selector.contains("360") -> Qualities.P360
+            // Pattern 1: Modern quality tabs
+            doc.select("div.quality-option, div.server-option").forEach { option ->
+                try {
+                    val quality = option.attr("data-quality").let {
+                        when {
+                            it.contains("1080") -> Qualities.P1080
+                            it.contains("720") -> Qualities.P720
+                            it.contains("480") -> Qualities.P480
                             else -> Qualities.Unknown
                         }
+                    }
 
-                        val finalUrl = when {
-                            href.startsWith("http") -> href
-                            href.startsWith("/") -> "$mainUrl$href"
-                            else -> "$mainUrl/$href"
-                        }
+                    option.select("a.download-link, button.download-btn").forEach { element ->
+                        val url = when {
+                            element.hasAttr("data-url") -> element.attr("data-url")
+                            element.hasAttr("href") -> element.attr("href")
+                            else -> null
+                        }?.let { fixUrl(it) }
 
-                        links.add(
-                            ExtractorLink(
+                        url?.let {
+                            callback(ExtractorLink(
                                 name,
-                                name,
-                                finalUrl,
+                                "$name ${quality.name}",
+                                it,
                                 mainUrl,
                                 quality.value,
                                 quality = quality
-                            )
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                if (links.isNotEmpty()) break
-            }
-
-            // If no links found, try to extract from iframes
-            if (links.isEmpty()) {
-                doc.select("iframe[src]").forEach { iframe ->
-                    try {
-                        val src = iframe.attr("src")
-                        if (src.contains("ak.sv") {
-                            links.add(
-                                ExtractorLink(
-                                    name,
-                                    name,
-                                    src,
-                                    mainUrl,
-                                    Qualities.Unknown.value
-                                )
-                            )
+                            ))
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
 
-            // Send all found links
-            links.forEach { callback(it) }
+            // Pattern 2: Direct download buttons
+            doc.select("a.direct-download, button[onclick*='download']").forEach { element ->
+                try {
+                    val quality = when {
+                        element.text().contains("1080") -> Qualities.P1080
+                        element.text().contains("720") -> Qualities.P720
+                        element.text().contains("480") -> Qualities.P480
+                        else -> Qualities.Unknown
+                    }
+
+                    val url = when {
+                        element.hasAttr("href") -> element.attr("href")
+                        element.attr("onclick").contains("http") -> 
+                            Regex("""(https?://[^'"]+)""").find(element.attr("onclick"))?.groupValues?.get(1)
+                        else -> null
+                    }?.let { fixUrl(it) }
+
+                    url?.let {
+                        callback(ExtractorLink(
+                            name,
+                            "$name Direct",
+                            it,
+                            mainUrl,
+                            quality.value
+                        ))
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
 
             // Extract subtitles if available
             doc.select("track[kind=subtitles]").forEach { sub ->
@@ -242,17 +234,29 @@ class Akwam : MainAPI() {
                         SubtitleFile(
                             sub.attr("srclang") ?: "ar",
                             fixUrl(sub.attr("src") ?: "")
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
 
-            return links.isNotEmpty()
+            continuation.resume(
+                doc.select("a[href*='download'], button[onclick*='download']").isNotEmpty()
+            )
         } catch (e: Exception) {
             e.printStackTrace()
-            return false
+            continuation.resume(false)
         }
+    }
+
+    private fun fixUrl(url: String): String {
+        return when {
+            url.startsWith("http") -> url
+            url.startsWith("//") -> "https:$url"
+            url.startsWith("/") -> "$mainUrl$url"
+            else -> "$mainUrl/$url"
+        }.replace("akwam.to", "ak.sv")
     }
 
     private fun getQualityFromId(id: Int?): Qualities {
