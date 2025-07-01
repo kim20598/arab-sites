@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element
 
 class Akwam : MainAPI() {
     override var lang = "ar"
-    override var mainUrl = "https://ak.sv"  // Updated domain
+    override var mainUrl = "https://ak.sv"
     override var name = "Akwam"
     override val usesWebView = false
     override val hasMainPage = true
@@ -164,56 +164,85 @@ class Akwam : MainAPI() {
         try {
             val doc = app.get(data).document
 
-            // Extract subtitles if available
-            doc.select("track[kind=subtitles]").forEach { sub ->
-                subtitleCallback.invoke(
-                    SubtitleFile(
-                        sub.attr("srclang") ?: "ar",
-                        fixUrl(sub.attr("src") ?: "")
-                )
-            }
+            // Try multiple selectors to find download links
+            val downloadSelectors = listOf(
+                "div.tab-content a[href*='download']", // Primary selector
+                "a.btn-download", // Alternative button style
+                "div.download-servers a[href]", // Server links
+                "div.quality-option a[href]" // Quality options
+            )
 
-            val links = doc.select("div.tab-content.quality").mapNotNull { element ->
-                try {
-                    val quality = getQualityFromId(element.attr("id").getIntFromText())
-                    element.select(".col-lg-6 > a").filter { link ->
-                        link.attr("href").contains("download", ignoreCase = true) ||
-                        link.text().contains("تحميل") || 
-                        link.text().contains("download", ignoreCase = true)
-                    }.map { link ->
-                        val href = link.attr("href")
-                        val finalUrl = if (href.contains("/download/")) {
-                            href
-                        } else {
-                            val path = href.substringAfter("/link")
-                            val contentPath = data.substringAfter(mainUrl)
-                            "$mainUrl/download$path$contentPath"
+            val links = mutableListOf<ExtractorLink>()
+
+            for (selector in downloadSelectors) {
+                doc.select(selector).forEach { element ->
+                    try {
+                        val href = element.attr("href").takeIf { it.isNotBlank() } ?: return@forEach
+                        val quality = when {
+                            element.text().contains("1080") || selector.contains("1080") -> Qualities.P1080
+                            element.text().contains("720") || selector.contains("720") -> Qualities.P720
+                            element.text().contains("480") || selector.contains("480") -> Qualities.P480
+                            element.text().contains("360") || selector.contains("360") -> Qualities.P360
+                            else -> Qualities.Unknown
                         }
-                        Pair(finalUrl, quality)
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    null
-                }
-            }.flatten()
 
-            // Process all links
-            links.forEach { (url, quality) ->
-                try {
-                    val linkDoc = app.get(url).document
-                    val downloadBtn = linkDoc.selectFirst("div.btn-loader > a[href]")
-                    downloadBtn?.attr("href")?.let { directUrl ->
-                        callback.invoke(
+                        val finalUrl = when {
+                            href.startsWith("http") -> href
+                            href.startsWith("/") -> "$mainUrl$href"
+                            else -> "$mainUrl/$href"
+                        }
+
+                        links.add(
                             ExtractorLink(
                                 name,
                                 name,
-                                directUrl,
+                                finalUrl,
                                 mainUrl,
                                 quality.value,
                                 quality = quality
                             )
                         )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
+                }
+
+                if (links.isNotEmpty()) break
+            }
+
+            // If no links found, try to extract from iframes
+            if (links.isEmpty()) {
+                doc.select("iframe[src]").forEach { iframe ->
+                    try {
+                        val src = iframe.attr("src")
+                        if (src.contains("ak.sv") {
+                            links.add(
+                                ExtractorLink(
+                                    name,
+                                    name,
+                                    src,
+                                    mainUrl,
+                                    Qualities.Unknown.value
+                                )
+                            )
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            // Send all found links
+            links.forEach { callback(it) }
+
+            // Extract subtitles if available
+            doc.select("track[kind=subtitles]").forEach { sub ->
+                try {
+                    subtitleCallback.invoke(
+                        SubtitleFile(
+                            sub.attr("srclang") ?: "ar",
+                            fixUrl(sub.attr("src") ?: "")
+                    )
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -232,7 +261,7 @@ class Akwam : MainAPI() {
             3 -> Qualities.P480
             4 -> Qualities.P720
             5 -> Qualities.P1080
-            6 -> Qualities.P2160 // 4K support
+            6 -> Qualities.P2160
             else -> Qualities.Unknown
         }
     }
