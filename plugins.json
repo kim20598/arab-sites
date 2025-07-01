@@ -564,13 +564,24 @@
         "name": "Cimastar"
     }
     {
-    "iconUrl": "https://www.google.com/s2/favicons?domain=https://ak.sv&sz=%size%",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/kim20598/arab-sites",
-    "fileSize": 8696,
-    "status": 1,
-    "language": "ar",
-    "authors": [
-        "kingslayer_007"
-    ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=akwam.to&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 13712,
+        "status": 1,
+        "language": "ar",
+        "authors": [
+            "Blatzar"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "Cartoon"
+        ],
+        "version": 2,
+        "internalName": "AkwamProvider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/AkwamProvider.cs3",
+        "name": "AkwamProvider"
+    },
 ]
