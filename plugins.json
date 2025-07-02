@@ -583,5 +583,23 @@
         "internalName": "AkwamProvider",
         "url": "https://github.com/kim20598/arab-sites/raw/main/build/AkwamProvider.cs3",
         "name": "AkwamProvider"
+    },
+    {
+        "iconUrl": "https://www.youtube.com/s/desktop/711fd789/img/logos/favicon_144x144.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 41777,
+        "status": 1,
+        "authors": [
+            "doGior"
+        ],
+        "tvTypes": [
+            "Others"
+        ],
+        "version": 12,
+        "internalName": "YouTube",
+        "description": "Videos, playlists and channels from YouTube",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/builds/YouTube.cs3",
+        "name": "YouTube"
     }
 ]
