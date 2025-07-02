@@ -601,5 +601,23 @@
         "description": "Videos, playlists and channels from YouTube",
         "url": "https://github.com/kim20598/arab-sites/raw/main/build/YouTube.cs3",
         "name": "YouTube"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=https://youtube.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 41777,
+        "status": 1,
+        "authors": [
+            "doGior"
+        ],
+        "tvTypes": [
+            "Others"
+        ],
+        "version": 12,
+        "internalName": "YouTube",
+        "description": "Videos, playlists and channels from YouTube",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/YouTube2.cs3",
+        "name": "YouTube"
     }
 ]
