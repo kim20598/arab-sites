@@ -624,6 +624,27 @@
         "name": "NetflixMirrorProvider"
     },
     {
+        "iconUrl": "https://netfree2.cc/mobile/img/nf2/icon_x192.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 42912,
+        "status": 1,
+        "language": "hi",
+        "authors": [
+            "Horis, megix",
+            "keyiflerolsun"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 31,
+        "internalName": "NetflixMirror",
+        "description": "Netflix, PrimeVideo Content in Multiple Languages",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/NetflixMirror.cs3",
+        "name": "NetflixMirror"
+    },
+    {
         "iconUrl": "https://www.google.com/s2/favicons?domain=https://youtube.com&sz=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
