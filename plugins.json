@@ -602,6 +602,27 @@
         "url": "https://github.com/kim20598/arab-sites/raw/main/build/YouTube.cs3",
         "name": "YouTube"
     },
+     {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=https://www.netflix.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 45194,
+        "status": 1,
+        "authors": [
+            "megix"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "AsianDrama",
+            "Anime"
+        ],
+        "version": 30,
+        "internalName": "NetflixMirrorProvider",
+        "description": "Netflix, PrimeVideo, JioHotstar(Hotstar, Disney, Paramount, HBO, Peacock) Content in Multiple Languages",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/NetflixMirrorProvider.cs3",
+        "name": "NetflixMirrorProvider"
+    },
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=https://youtube.com&sz=%size%",
         "apiVersion": 1,
