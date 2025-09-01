@@ -959,6 +959,26 @@
         "name": "FushaarProvider"
     },
     {
+        "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 44544,
+        "status": 1,
+        "language": "ta",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 2,
+        "internalName": "MovieBoxProviderIN",
+        "description": "Multi Language Movies and Series Provider (IN)",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/MovieBoxProviderIN.cs3",
+        "name": "MovieBoxProviderIN"
+    },
+    {
         "iconUrl": "https://www.google.com/s2/favicons?domain=https://youtube.com&sz=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
