@@ -645,6 +645,86 @@
         "name": "NetflixMirror"
     },
     {
+        "iconUrl": "https://images.dwncdn.net/images/t_app-icon-l/p/b0c9663c-0d61-4941-b12f-91c58c06189f/1137087733/hdo-box-logo",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 97614,
+        "status": 1,
+        "language": "ta",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Movies",
+            "TvSeries"
+        ],
+        "version": 3,
+        "internalName": "HDOProvider",
+        "description": "HDO provider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/HDOProvider.cs3",
+        "name": "HDOProvider"
+    },
+    {
+        "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 43626,
+        "status": 1,
+        "language": "ta",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 9,
+        "internalName": "MovieBoxProvider",
+        "description": "Multi Language Movies and Series Provider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/MovieBoxProvider.cs3",
+        "name": "MovieBoxProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=goldenaudiobook.com/&sz=%size%",
+        "jarFileSize": 50519,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 13055,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Others"
+        ],
+        "version": 1,
+        "internalName": "GoldenAudiobook",
+        "jarUrl": "https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/GoldenAudiobook.jar",
+        "description": "Audiobooks - Use Picture in Picture or VLC as external player",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/GoldenAudiobook.cs3",
+        "name": "GoldenAudiobook"
+    },
+    {
+        "iconUrl": "https://www.fullreplays.com/wp-content/uploads/2023/05/logo-ball-150x150.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 10073,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Others"
+        ],
+        "version": 4,
+        "internalName": "FullReplays",
+        "description": "Watch Football Full Match Replay and Shows",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/FullReplays.cs3",
+        "name": "FullReplays"
+    },
+    {
         "iconUrl": "https://www.google.com/s2/favicons?domain=https://youtube.com&sz=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
