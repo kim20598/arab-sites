@@ -959,27 +959,26 @@
         "name": "FushaarProvider"
     },
     {
-        "iconUrl": "https://www.google.com/s2/favicons?domain=www.wcostream.com&sz=%size%",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/kim20598/arab-sites",
-        "fileSize": 16159,
-        "status": 1,
-        "language": "en",
-        "authors": [
-            "kim20598"
-        ],
-        "tvTypes": [
-            "AnimeMovie",
-            "Cartoon",
-            "Anime",
-            "TvSeries"
-        ],
-        "version": 1,
-        "internalName": "WatchCartoonOnlineProvider",
-        "description": "Anime/Cartoon in Hindi",
-        "url": "https://github.com/kim20598/arab-sites/raw/main/build/WatchCartoonOnlineProvider.cs3",
-        "name": "WatchCartoonOnlineProvider"
-    },
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.wcostream.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 16159,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Cartoon",
+            "Anime",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "WatchCartoonOnlineProvider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/WatchCartoonOnlineProvider.cs3",
+        "name": "WatchCartoonOnlineProvider"
+    },
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=crunchyroll.com&sz=%size%",
         "apiVersion": 1,
