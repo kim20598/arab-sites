@@ -959,6 +959,127 @@
         "name": "FushaarProvider"
     },
     {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.wcostream.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 16159,
+        "status": 0,
+        "language": "en",
+        "authors": [
+            
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Cartoon",
+            "Anime",
+            "TvSeries"
+        ],
+        "version": 3,
+        "internalName": "WatchCartoonOnlineProvider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/WatchCartoonOnlineProvider.cs3",
+        "name": "WatchCartoonOnlineProvider"
+    },
+   {
+        "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 44544,
+        "status": 1,
+        "language": "ta",
+        "authors": [
+            "kim20598"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 2,
+        "internalName": "MovieBoxProviderIN",
+        "description": "Multi Language Movies and Series Provider (IN)",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/MovieBoxProviderIN.cs3",
+        "name": "MovieBoxProviderIN"
+    },
+   {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=crunchyroll.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 30092,
+        "status": 0,
+        "language": "en",
+        "authors": [
+            "Sir Aguacata (KillerDogeEmpire)"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 5,
+        "internalName": "Crunchyroll",
+        "description": "The Crunchyroll provider allows you to watch all the shows that are on Crunchyroll.",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/Crunchyroll.cs3",
+        "name": "Crunchyroll"
+    },
+   {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=kimcartoon.li&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 11482,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            
+        ],
+        "tvTypes": [
+            "Cartoon"
+        ],
+        "version": 1,
+        "internalName": "KimCartoonProvider",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/KimCartoonProvider.cs3",
+        "name": "KimCartoonProvider"
+    },
+   {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.stremio.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 21021,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Cloudburst"
+        ],
+        "tvTypes": [
+            "Others"
+        ],
+        "version": 2,
+        "internalName": "StremioProvider",
+        "description": "Allows you to use stremio addons. Requires setup. (Torrents and old api does not work)",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/StremioProvider.cs3",
+        "name": "StremioProvider"
+    },
+   {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.2embed.to&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/kim20598/arab-sites",
+        "fileSize": 58992,
+        "status": 0,
+        "language": "en",
+        "authors": [
+            
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AnimeMovie"
+        ],
+        "version": 18,
+        "internalName": "SflixProvider",
+        "description": "Due to the video host changing encryption methods extremely often these extensions might not work perfectly. Includes DopeBox, SolarMovie, AniWatch (Zoro) and HDToday",
+        "url": "https://github.com/kim20598/arab-sites/raw/main/build/SflixProvider.cs3",
+        "name": "SflixProvider"
+    },
+    {
         "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
