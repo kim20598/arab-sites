@@ -963,7 +963,7 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
         "fileSize": 16159,
-        "status": 0,
+        "status": 1,
         "language": "en",
         "authors": [
             
@@ -1004,7 +1004,7 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
         "fileSize": 30092,
-        "status": 0,
+        "status": 1,
         "language": "en",
         "authors": [
             "Sir Aguacata (KillerDogeEmpire)"
@@ -1028,7 +1028,7 @@
         "status": 1,
         "language": "en",
         "authors": [
-            
+            "kim20598"
         ],
         "tvTypes": [
             "Cartoon"
@@ -1062,10 +1062,10 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/kim20598/arab-sites",
         "fileSize": 58992,
-        "status": 0,
+        "status": 1,
         "language": "en",
         "authors": [
-            
+            "kim20598"
         ],
         "tvTypes": [
             "TvSeries",
