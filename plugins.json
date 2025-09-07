@@ -974,8 +974,9 @@
             "Anime",
             "TvSeries"
         ],
-        "version": 3,
+        "version": 1,
         "internalName": "WatchCartoonOnlineProvider",
+        "description": "Anime/Cartoon in Hindi",
         "url": "https://github.com/kim20598/arab-sites/raw/main/build/WatchCartoonOnlineProvider.cs3",
         "name": "WatchCartoonOnlineProvider"
     },
