@@ -1,0 +1,8 @@
+{
+    "name": "hakim fix providers repository",
+    "description": "hakim Plugin Repository",
+    "manifestVersion": 1,
+    "pluginLists": [
+      "https://raw.githubusercontent.com/kim20598/arab-sites/refs/heads/main/build/plugins%20(fucking%20shit).json"
+    ]
+  }
