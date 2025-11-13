@@ -1,7 +1,7 @@
 {
     "name": "arab-sites",
-    "iconUrl": "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fma-rick-profile-pictures-v0-eyqdxmh0xtkd1.jpg%3Fwidth%3D1080%26crop%3Dsmart%26auto%3Dwebp%26s%3D614bfd9f6c0a7468d2b082b83453e378f816736e",
-    "description": "Updating the Cloudstream Arabic Provider. Feel free to join the Cloudstream Discord server for the latest information.",
+    "iconUrl": "https://static.wikia.nocookie.net/multiversus/images/b/bf/Rick_C-137_Profile_Icon.png/revision/latest?cb=20220927193025",
+    "description": "Updating the Cloudstream Arabic Provider",
     "manifestVersion": 1,
     "pluginLists": [
       "https://github.com/kim20598/arab-sites/raw/main/plugins.json"
